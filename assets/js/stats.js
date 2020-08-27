@@ -17,7 +17,7 @@ async function showData(){
   data.Countries.forEach(function(country,index) {    
   //Using the createNode function to create new elements
   var divCol = createNode('tr'),
-   h2 = createNode('th'),
+   h2 = createNode('td'),
    pConf = createNode('td'),
    //pActive = createNode('p'),
    pRec = createNode('td'),
@@ -30,6 +30,8 @@ async function showData(){
    pRec.classList.add("bg-success");
    pRec.classList.add("text-white");
    pDeaths.classList.add("text-white");
+
+   h2.style.fontWeight = "600"
 
   //Assigning the data gotten from the API to the locally created elements
   h2.innerText = `${country.Country}`
