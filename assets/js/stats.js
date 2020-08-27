@@ -1,60 +1,89 @@
 
 var section = document.getElementById("displayResults");
 
-async function showData(){
+function separators(num)
+  {
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
+  }
+
+async function showData() {
   const res = await fetch('https://api.covid19api.com/summary');
   const data = await res.json();
- 
+
   console.log(data.Global)
-  output = `
+  // output = `
     
-    <span class="col-sm bg-warning element">Total Confirmed: ${data.Global.TotalConfirmed}</span>
-    <span class="col-sm bg-success element">Total Recovered: ${data.Global.TotalRecovered}</span>
-    <span class="col-sm bg-danger element">Total Deaths: ${data.Global.TotalDeaths}</span>
+  //   <span class="col-sm bg-warning element">Total Confirmed: ${data.Global.TotalConfirmed}</span>
+  //   <span class="col-sm bg-warning element">Total Confirmed: +${data.Global.NewConfirmed}</span>
+  //   <span class="col-sm bg-success element">Total Recovered: ${data.Global.TotalRecovered}</span>
+  //   <span class="col-sm bg-success element">Total Recovered: +${data.Global.NewRecovered}</span>
+  //   <span class="col-sm bg-danger element">Total Deaths: ${data.Global.TotalDeaths}</span>
+  //   <span class="col-sm bg-danger element">Total Deaths: +${data.Global.NewDeaths}</span>
+  // `
+  tc = separators(data.Global.TotalConfirmed)
+  nc = separators(data.Global.NewConfirmed)
+  tr = separators(data.Global.TotalRecovered)
+  nr = separators(data.Global.NewRecovered)
+  td = separators(data.Global.TotalDeaths)
+  nd = separators(data.Global.NewDeaths)
+  output =  `
+  <tr style="font-weight: 800; font-size: 1.25rem;">
+  <td>TOTAL</td>
+    <td>${tc}</td>
+    <td>+${nc}</td>
+    <td>${tr}</td>
+    <td>+${nr}</td>
+    <td>${td}</td>
+    <td>+${nd}</td>
+    </tr>
   `
-  // document.getElementById("global").innerHTML = output;
+ 
   
-  data.Countries.forEach(function(country,index) {    
-  //Using the createNode function to create new elements
-  var divCol = createNode('tr'),
-   h2 = createNode('td'),
-   pConf = createNode('td'),
-   //pActive = createNode('p'),
-   pRec = createNode('td'),
-   pDeaths = createNode('td');
-   pNewRec = createNode('td');
-   pNewDeaths = createNode('td');
-   pNewConf = createNode('td');
+  section.innerHTML = output;
 
-   pDeaths.classList.add("bg-danger");
-   pRec.classList.add("bg-success");
-   pRec.classList.add("text-white");
-   pDeaths.classList.add("text-white");
+  data.Countries.forEach(function (country, index) {
+    //Using the createNode function to create new elements
+    var divCol = createNode('tr'),
+      h2 = createNode('td'),
+      pConf = createNode('td'),
+      //pActive = createNode('p'),
+      pRec = createNode('td'),
+      pDeaths = createNode('td');
+    pNewRec = createNode('td');
+    pNewDeaths = createNode('td');
+    pNewConf = createNode('td');
 
-   h2.style.fontWeight = "600"
+    pDeaths.classList.add("bg-danger");
+    pRec.classList.add("bg-success");
+    pRec.classList.add("text-white");
+    pDeaths.classList.add("text-white");
 
-  //Assigning the data gotten from the API to the locally created elements
-  h2.innerText = `${country.Country}`
-  pConf.innerText = `${country.TotalConfirmed}`
-  pNewConf.innerText = `+${country.NewConfirmed}`
-  pRec.innerText = `${country.TotalRecovered}`
-  pNewRec.innerText = `+${country.NewRecovered}`
-  pDeaths.innerText = `${country.TotalDeaths}`
-  pNewDeaths.innerText = `+${country.NewDeaths}`
+    h2.style.fontWeight = "600"
+
+    //Assigning the data gotten from the API to the locally created elements
+    h2.innerText = `${country.Country}`
+    pConf.innerText = separators(`${country.TotalConfirmed}`)
+    pNewConf.innerText = separators(`+${country.NewConfirmed}`)
+    pRec.innerText = separators(`${country.TotalRecovered}`)
+    pNewRec.innerText = separators(`+${country.NewRecovered}`)
+    pDeaths.innerText = separators(`${country.TotalDeaths}`)
+    pNewDeaths.innerText = separators(`+${country.NewDeaths}`)
 
 
-  //Appending children to parents
-  appendChildFunction(divCol,h2);
-  appendChildFunction(divCol,pConf);
-  appendChildFunction(divCol,pNewConf);
-  appendChildFunction(divCol,pRec);
-  appendChildFunction(divCol,pNewRec);
-  appendChildFunction(divCol,pDeaths);
-  appendChildFunction(divCol,pNewDeaths);
+    //Appending children to parents
+    appendChildFunction(divCol, h2);
+    appendChildFunction(divCol, pConf);
+    appendChildFunction(divCol, pNewConf);
+    appendChildFunction(divCol, pRec);
+    appendChildFunction(divCol, pNewRec);
+    appendChildFunction(divCol, pDeaths);
+    appendChildFunction(divCol, pNewDeaths);
 
-  appendChildFunction(section,divCol);
+    appendChildFunction(section, divCol);
 
-});
+  });
 }
 
 function createNode(element) {
@@ -62,8 +91,8 @@ function createNode(element) {
   return document.createElement(element);
 }
 
-function appendChildFunction(parent,element){
-//Appends child to parent function
+function appendChildFunction(parent, element) {
+  //Appends child to parent function
   return parent.appendChild(element)
 }
 
@@ -82,6 +111,6 @@ function myFunction() {
       } else {
         tr[i].style.display = "none";
       }
-    }       
+    }
   }
 }
