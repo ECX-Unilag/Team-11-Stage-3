@@ -9,5 +9,14 @@ Or https://ecx-covid-tracker.netlify.app
 Project API: https://api.covid19api.com/summary
 ###
 ###
-Project Contributors: 
-Adelakun Tobi
+Project Contributors: ###
+Ogboye Omonor Emelda
+Agbomeji Olatunbosun Habeeb				
+Mudasiru Maryam Adenike	
+Abisola Ibrahim	
+Adelakun Oluwatobiloba	
+Emmanuel Stephen
+Oluwasina Abimbola Soneye	
+Olusola Gideon Olagunju	
+Mustapha Moshood Olawale		
+Olamide Makinde
